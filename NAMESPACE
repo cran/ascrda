@@ -1,0 +1,24 @@
+export(
+"nnc", 
+"khat", 
+"nncTest",
+"ascrda", 
+"FitRda",
+"FitSVM",
+"rdaSVM",
+"synma",
+"DeleteD",
+"ErrorRow",
+"ErrorDeleteD")
+
+importFrom("rda", "rda")
+importFrom("rda", "rda.cv")
+importFrom("MASS", "mvrnorm")
+importFrom("e1071", "svm")
+importFrom("nnet", "multinom")
+importFrom("class", "knn.cv")
+importFrom("class", "knn")
+
+
+
+
