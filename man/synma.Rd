@@ -64,7 +64,7 @@ Periodicity, Change Detection and Prediction in Microarrays. Ph.D. thesis,
 The University of Western Ontario, Canada.
 }
 
-\author{M. S. Islam and A. I. McLeod, email: mislam22@uwo.ca}
+\author{M. S. Islam and A. I. McLeod, email: aimcleod@uwo.ca}
 
 \examples{
 #A micro-sized microarray!

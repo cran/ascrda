@@ -4,12 +4,12 @@ export(
 "nncTest",
 "ascrda", 
 "FitRda",
-"FitSVM",
-"rdaSVM",
+"FitSvm",
+"FitDLDA",
+"FitkNN",
+"FitPAM",
 "synma",
-"DeleteD",
-"ErrorRow",
-"ErrorDeleteD")
+"getTrainTest")
 
 importFrom("rda", "rda")
 importFrom("rda", "rda.cv")
@@ -18,6 +18,10 @@ importFrom("e1071", "svm")
 importFrom("nnet", "multinom")
 importFrom("class", "knn.cv")
 importFrom("class", "knn")
+importFrom("sfsmisc", "diagDA")
+importFrom("pamr", "pamr.train")
+importFrom("pamr", "pamr.adaptthresh")
+importFrom("pamr", "pamr.predict")
 
 
 

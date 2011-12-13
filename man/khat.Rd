@@ -38,7 +38,7 @@ Biometrika, 90(1), 99-112.
 
 \author{
 M. S. Islam and A. I. McLeod
-Maintainer: <mislam22@uwo.ca>
+Maintainer: <aimcleod@uwo.ca>
 }
 
 

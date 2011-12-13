@@ -30,8 +30,6 @@ Symbolically,
 where eqn{k_i}{k_i} denotes the indicies of all observations
 in the k-th neighbor of the i-th observation.
 
-For further discussion  of the Holmes and Adams (2003) method 
-see HolmesAdamsMethod.pdf included in the package documentation.
 }
 
 \value{vector of length n of nearest neighbor autocovariates corresponding to training data 
@@ -46,7 +44,7 @@ Biometrika, 90(1), 99-112.
 
 \author{
 M. S. Islam and A. I. McLeod
-Maintainer: <mislam22@uwo.ca>
+Maintainer: <aimcleod@uwo.ca>
 }
 
 \seealso{

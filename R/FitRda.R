@@ -1,27 +1,34 @@
 FitRda <-
-function(X, y, Xt, yt, alpha=seq(0,0.99,0.11), delta=seq(0,3,0.2), ...){
+function(X, y, Xt, yt, alpha=seq(0,0.99,0.11), delta=seq(0,3,0.2),  ...){
 #
-# Finds Misclassification error rate for trian and test data using RDA. 
+# Finds Misclassification error rate for trian and test data using RDA.
 #
 # X        : Training sample, expression matrix
 # Xt       : Test sample, expression matrix
-# y        : Class in training data. 
-# yt       : Class in test data. 
+# y        : Class in training data.
+# yt       : Class in test data.
 # alpha    : alpha vector in function 'rda'
 # delta    : delta vector in function 'rda'
 #
-    stopifnot(is.vector(y), is.vector(yt), 
-                nrow(X)==length(y), 
+#requires R package "rda"
+#
+#Note: rda(), rda.cv() and predict.rda() use "expression matrix" so need transpose
+#
+#Reference
+#Guo Y, Hastie T, Tibshirani R (2007).
+#Regularized linear discriminant analysis and its application in microarrays.
+#Biostatistics 8, 86-100.
+#
+    stopifnot(is.vector(y), is.vector(yt),
+                nrow(X)==length(y),
                 nrow(Xt)==length(yt),
-                ncol(Xt)==ncol(X))
-    fit <- rda(t(X), y)
-    sink("Junk.txt")
-    tryCatch(
-            fit.cv <- rda.cv(fit,t(X),y,alpha=alpha,delta=delta,...),
-            finally = {
-                     sink()
-                     unlink("Junk.txt")
-                     })
+                ncol(Xt)==ncol(X)
+		)
+    fit <- tryCatch(rda(t(X), y), error=function(e) NA)
+    if (any(is.na(fit))) return(c(NA,NA))
+    capture.output(fit.cv <- tryCatch(rda.cv(fit,t(X),y,alpha=alpha,delta=delta, ...), error=function(e) NA))
+    if (any(is.na(fit.cv))) return(c(NA,NA))
+#implementing the "min-min" rule
     a<-fit.cv$cv.err
     b<-fit.cv$ngene
     La<-length(alpha)
@@ -33,13 +40,13 @@ function(X, y, Xt, yt, alpha=seq(0,0.99,0.11), delta=seq(0,3,0.2), ...){
     Ngene<-b[NInd]  # the number of genes corresponding to selected (alpha, delta)
     OptInd<-NInd[Ngene==min(Ngene)] # Index corresponding to optimal selection.
     Alpha<-IndAlp[OptInd]
-    Delta<-IndDel[OptInd] 
+    Delta<-IndDel[OptInd]
     nAlpha<-length(Alpha)
-    ytp<- sapply(1:nAlpha,function(i) predict(fit,x=t(X),y=y,xnew=t(Xt),alpha=Alpha[i],delta=Delta[i]))   
+    ytp<- sapply(1:nAlpha,function(i) predict(fit,x=t(X),y=y,xnew=t(Xt),alpha=Alpha[i],delta=Delta[i]))
 # remark: if test sample only has one row
-    if(length(yt)==1) 
-        {MisclassTest<- ytp!=yt}  
+    if(length(yt)==1)
+        {MisclassTest<- ytp!=yt}
     else
-        {MisclassTest<-apply(ytp,2,function(x) sum(yt!=x)/length(yt))} 
-    c(Train=min(a)/length(y), Test=mean(MisclassTest)) 
+        {MisclassTest<-apply(ytp,2,function(x) sum(yt!=x)/length(yt))}
+    c(Train=min(a)/length(y), Test=mean(MisclassTest))
  }
